@@ -66,12 +66,12 @@ const M=h=>$('main').innerHTML=h;
 const cap=(k,l)=>`<div class=row><label class=b>📷 ${l}<input type=file accept="image/*" capture=environment hidden onchange="take(this,'${k}')"></label><label class="b s">🖼 ${tr('gal')}<input type=file accept="image/*" ${k=='rx'?'multiple':''} hidden onchange="take(this,'${k}')"></label></div>`;
 
 async function route(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[];
- const[,,id,,n]=location.hash.split('/');R=id&&(await all()).find(x=>x.id==id);$('#hr').hidden=!R;
+ const[,,id,,n]=location.hash.split('/');R=id&&(await all()).find(x=>x.id==id);$('#hr').hidden=!!R;
  R?(n?pg(R,+n):rec(R)):home()}
 
 async function home(){const rs=(await all()).sort((a,b)=>b.updated-a.updated);H(tr('app'));
- M(`<button class=b onclick=nw()>${tr('new')}</button>`+(rs.length?'':'<p class=mu>'+tr('empty')+'</p>')+
- rs.map(r=>`<a class=c href="#/r/${r.id}"><div><b>${esc(r.name)||tr('unn')}</b><span class=mu>${esc(r.date)} · ${tr('scn',cnt(r))}</span></div><em>›</em></a>`).join(''))}
+ M(`<button class=b onclick=nw()>${tr('new')}</button>`+'<div id=rl>'+(rs.length?'':'<p class=mu>'+tr('empty')+'</p>')+
+ rs.map(r=>`<a class=c href="#/r/${r.id}"><div><b>${esc(r.name)||tr('unn')}</b><span class=mu>${esc(r.date)} · ${tr('scn',cnt(r))}</span></div><em>›</em></a>`).join('')+'</div>')}
 
 async function nw(){const r={id:Date.now().toString(36),name:'',date:new Date().toISOString().slice(0,10),photos:{},rx:[],updated:Date.now()};
  await put(r);location.hash='#/r/'+r.id}
@@ -128,7 +128,8 @@ function applyT(){document.documentElement.lang=L;
 function toast(m){let e=$('#ts');if(!e){e=document.createElement('div');e.id='ts';document.body.append(e)}e.textContent=m;e.hidden=false;clearTimeout(e._t);e._t=setTimeout(()=>e.hidden=true,3000)}
 $('#hl').onclick=$('#cl').onclick=()=>{L=L=='en'?'or':'en';try{localStorage.lang=L}catch(e){}applyT();route()};
 $('#hc').onclick=()=>$('#cv').hidden=false;
-$('#hh').onclick=$('#hr').onclick=()=>{$('#cv').hidden=true;location.hash.length>2?location.hash='#/':route()};
+$('#hr').onclick=()=>{const t=$('#rl');t&&t.scrollIntoView({behavior:'smooth',block:'start'})};
+$('#hh').onclick=()=>{$('#cv').hidden=true;location.hash.length>2?location.hash='#/':route()};
 $('#go').onclick=()=>{try{sessionStorage.cv=1}catch(e){}$('#hh').click()};
 try{if(sessionStorage.cv||location.hash)$('#cv').hidden=true}catch(e){}
 // offline download: caches all 53 reference images
