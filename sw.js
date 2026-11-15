@@ -1,4 +1,4 @@
-const V='mcp-v17',R='mcp-ref',A=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable-512.png','cover.jpg','update-kit.js'];
+const V='mcp-v18',R='mcp-ref',A=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable-512.png','cover.jpg','update-kit.js'];
 // install: download every app file and report the real progress to the page (drives the update ring).
 // The new version then WAITS; it is switched on only when the user taps "Update" (see update-kit.js).
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(V);let n=0,dead=0;
