@@ -40,7 +40,8 @@ header{padding:10px 12px}
 .hb[hidden]{display:none}.hb img{width:30px;height:30px;border-radius:7px}
 .hb svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #hl,#cl{width:auto;min-width:36px;padding:0 8px}#hbk{font-size:26px;padding-bottom:3px}
-#hl{position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;width:auto;height:40px;padding:0 16px;border-radius:20px;background:var(--ac);box-shadow:0 2px 10px rgba(0,0,0,.35);font-size:14px}
+#hl,#hr{position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;width:auto;height:40px;padding:0 16px;border-radius:20px;background:var(--ac);box-shadow:0 2px 10px rgba(0,0,0,.35);font-size:14px}
+#hr{right:auto;left:12px}
 #cl{position:absolute;top:calc(12px + env(safe-area-inset-top));right:12px;background:rgba(0,0,0,.45)}
 #hp{position:absolute;right:-3px;bottom:-3px;min-width:16px;padding:0 4px;border-radius:8px;background:#fff;color:#0f766e;font-size:10px;line-height:16px}#hp:empty{display:none}
 .done b{color:#86efac}
@@ -48,7 +49,7 @@ header{padding:10px 12px}
 #ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;max-width:90%;padding:10px 16px;border-radius:20px;background:#111;color:#fff;font-size:14px;text-align:center}#ts[hidden]{display:none}
 .net{display:inline-flex;align-items:center;gap:6px;flex:none;white-space:nowrap;font:700 11px/1 system-ui,sans-serif;padding:6px 9px;border-radius:99px;background:rgba(0,0,0,.28);color:#fff}.net i{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.35);transition:background .25s,box-shadow .25s}.net.off i{background:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,.35)}</style></head>
 <body><div id=cv><img src=cover.jpg alt=""><button id=cl class=hb></button><div id=cx><h1 data-t=app></h1><p data-t=sub></p><button class=b id=go data-t=go></button></div></div>
-<header><button id=hc class=hb><img src=icon-192.png alt=""></button><a id=hbk class=hb hidden>‹</a><h1 id=ht></h1><span id=net class=net role=status aria-live=polite><i></i><b></b></span><button id=hi class=hb hidden>📲</button><button id=hh class=hb><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></button><button id=ho class=hb aria-label="Download for offline use" title="Download for offline use"><b data-t=offl></b><span id=hp></span></button></header><button id=hl class=hb></button>
+<header><button id=hc class=hb><img src=icon-192.png alt=""></button><a id=hbk class=hb hidden>‹</a><h1 id=ht></h1><span id=net class=net role=status aria-live=polite><i></i><b></b></span><button id=hi class=hb hidden>📲</button><button id=hh class=hb><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></button><button id=ho class=hb aria-label="Download for offline use" title="Download for offline use"><b data-t=offl></b><span id=hp></span></button></header><button id=hl class=hb></button><button id=hr class=hb data-t=recs hidden></button>
 <main></main>
 <script src=update-kit.js></script>
 <script>
@@ -65,7 +66,7 @@ const M=h=>$('main').innerHTML=h;
 const cap=(k,l)=>`<div class=row><label class=b>📷 ${l}<input type=file accept="image/*" capture=environment hidden onchange="take(this,'${k}')"></label><label class="b s">🖼 ${tr('gal')}<input type=file accept="image/*" ${k=='rx'?'multiple':''} hidden onchange="take(this,'${k}')"></label></div>`;
 
 async function route(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[];
- const[,,id,,n]=location.hash.split('/');R=id&&(await all()).find(x=>x.id==id);
+ const[,,id,,n]=location.hash.split('/');R=id&&(await all()).find(x=>x.id==id);$('#hr').hidden=!R;
  R?(n?pg(R,+n):rec(R)):home()}
 
 async function home(){const rs=(await all()).sort((a,b)=>b.updated-a.updated);H(tr('app'));
@@ -113,8 +114,8 @@ async function exp(){const buf=async b=>new Uint8Array(await b.arrayBuffer()),f=
  const a=document.createElement('a');a.href=URL.createObjectURL(file);a.download=file.name;a.click()}
 
 
-const D={en:{app:'MCP Card — Photo Kit',sub:'Scan and save Mother & Child Protection card pages. Works offline.',go:'Get started',new:'＋ New beneficiary record',empty:'No records yet. Everything is saved on this device and works offline.',unn:'Unnamed',scn:'{n}/{N} pages scanned',nr:'New record',nm:'Name of pregnant woman / child',dt:'Date of this visit',rxh:'Prescription photos',rxa:'Add prescription',rp:'Register pages',sc:'{n}/{N} scanned',pg:'Page',ex:'⬇ Export ZIP (share / save)',del:'Delete record',cdel:'Delete this record and all its photos from this device?',tap:'Tap the reference image to view full-size.',info:'ℹ️ Informational page — no scan needed.',you:'Your photo',ret:'Retake (replaces)',scp:'Scan page',gal:'Gallery',offl:'⬇',prv:'‹ Prev',nxt:'Next ›',cov:'Cover page',hom:'Home',off:'Download for offline use',ins:'Install app',rdy:'Ready for offline use ✓',fail:'Download failed. Check your internet and try again.',ios:'Tap Share, then “Add to Home Screen”.'},
-or:{app:'ମମତା Card - Photo kit',sub:'ମା’ ଓ ଶିଶୁ ସୁରକ୍ଷା କାର୍ଡର ପୃଷ୍ଠାକୁ ସ୍କାନ୍ କରି ସେଭ୍ କରନ୍ତୁ। ଅଫଲାଇନରେ ମଧ୍ୟ କାମ କରେ।',go:'ଆରମ୍ଭ କରନ୍ତୁ',new:'＋ ନୂଆ ହିତାଧିକାରୀ ରେକର୍ଡ',empty:'ଏଯାବତ୍ କୌଣସି ରେକର୍ଡ ନାହିଁ। ସବୁକିଛି ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୁଏ ଏବଂ ଅଫଲାଇନରେ କାମ କରେ।',unn:'ନାମ ନାହିଁ',scn:'{n}/{N} ପୃଷ୍ଠା ସ୍କାନ୍ ହୋଇଛି',nr:'ନୂଆ ରେକର୍ଡ',nm:'ଗର୍ଭବତୀ ମହିଳା / ଶିଶୁଙ୍କ ନାମ',dt:'ଏହି ଗସ୍ତର ତାରିଖ',rxh:'ପ୍ରେସ୍କ୍ରିପସନ୍ ଫଟୋ',rxa:'ପ୍ରେସ୍କ୍ରିପସନ୍ ଯୋଡ଼ନ୍ତୁ',rp:'ରେଜିଷ୍ଟର ପୃଷ୍ଠା',sc:'{n}/{N} ସ୍କାନ୍ ହୋଇଛି',pg:'ପୃଷ୍ଠା',ex:'⬇ ZIP ଏକ୍ସପୋର୍ଟ (ସେୟାର୍ / ସେଭ୍)',del:'ରେକର୍ଡ ଡିଲିଟ୍ କରନ୍ତୁ',cdel:'ଏହି ରେକର୍ଡ ଓ ଏହାର ସମସ୍ତ ଫଟୋ ଏହି ଫୋନ୍‌ରୁ ଡିଲିଟ୍ କରିବେ?',tap:'ପୂର୍ଣ୍ଣ ଆକାରରେ ଦେଖିବାକୁ ରେଫରେନ୍ସ ଚିତ୍ରକୁ ଟାପ୍ କରନ୍ତୁ।',info:'ℹ️ ସୂଚନାମୂଳକ ପୃଷ୍ଠା — ସ୍କାନ୍ ଆବଶ୍ୟକ ନାହିଁ।',you:'ଆପଣଙ୍କ ଫଟୋ',ret:'ପୁଣି ଫଟୋ ନିଅନ୍ତୁ (ପୁରୁଣାକୁ ବଦଳାଏ)',scp:'ପୃଷ୍ଠା ସ୍କାନ୍ କରନ୍ତୁ',gal:'ଗ୍ୟାଲେରୀ',offl:'⬇',prv:'‹ ପୂର୍ବ',nxt:'ପରବର୍ତ୍ତୀ ›',cov:'କଭର ପୃଷ୍ଠା',hom:'ମୂଳ ପୃଷ୍ଠା',off:'ଅଫଲାଇନ୍ ପାଇଁ ଡାଉନଲୋଡ୍',ins:'ଆପ୍ ଇନଷ୍ଟଲ୍ କରନ୍ତୁ',rdy:'ଅଫଲାଇନ୍ ବ୍ୟବହାର ପାଇଁ ପ୍ରସ୍ତୁତ ✓',fail:'ଡାଉନଲୋଡ୍ ହେଲା ନାହିଁ। ଇଣ୍ଟରନେଟ୍ ଦେଖି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।',ios:'ସେୟାର୍ ଟାପ୍ କରି “Add to Home Screen” ବାଛନ୍ତୁ।'}};
+const D={en:{app:'MCP Card — Photo Kit',recs:'Records',sub:'Scan and save Mother & Child Protection card pages. Works offline.',go:'Get started',new:'＋ New beneficiary record',empty:'No records yet. Everything is saved on this device and works offline.',unn:'Unnamed',scn:'{n}/{N} pages scanned',nr:'New record',nm:'Name of pregnant woman / child',dt:'Date of this visit',rxh:'Prescription photos',rxa:'Add prescription',rp:'Register pages',sc:'{n}/{N} scanned',pg:'Page',ex:'⬇ Export ZIP (share / save)',del:'Delete record',cdel:'Delete this record and all its photos from this device?',tap:'Tap the reference image to view full-size.',info:'ℹ️ Informational page — no scan needed.',you:'Your photo',ret:'Retake (replaces)',scp:'Scan page',gal:'Gallery',offl:'⬇',prv:'‹ Prev',nxt:'Next ›',cov:'Cover page',hom:'Home',off:'Download for offline use',ins:'Install app',rdy:'Ready for offline use ✓',fail:'Download failed. Check your internet and try again.',ios:'Tap Share, then “Add to Home Screen”.'},
+or:{app:'ମମତା Card - Photo kit',recs:'ରେକର୍ଡ',sub:'ମା’ ଓ ଶିଶୁ ସୁରକ୍ଷା କାର୍ଡର ପୃଷ୍ଠାକୁ ସ୍କାନ୍ କରି ସେଭ୍ କରନ୍ତୁ। ଅଫଲାଇନରେ ମଧ୍ୟ କାମ କରେ।',go:'ଆରମ୍ଭ କରନ୍ତୁ',new:'＋ ନୂଆ ହିତାଧିକାରୀ ରେକର୍ଡ',empty:'ଏଯାବତ୍ କୌଣସି ରେକର୍ଡ ନାହିଁ। ସବୁକିଛି ଏହି ଫୋନ୍‌ରେ ସେଭ୍ ହୁଏ ଏବଂ ଅଫଲାଇନରେ କାମ କରେ।',unn:'ନାମ ନାହିଁ',scn:'{n}/{N} ପୃଷ୍ଠା ସ୍କାନ୍ ହୋଇଛି',nr:'ନୂଆ ରେକର୍ଡ',nm:'ଗର୍ଭବତୀ ମହିଳା / ଶିଶୁଙ୍କ ନାମ',dt:'ଏହି ଗସ୍ତର ତାରିଖ',rxh:'ପ୍ରେସ୍କ୍ରିପସନ୍ ଫଟୋ',rxa:'ପ୍ରେସ୍କ୍ରିପସନ୍ ଯୋଡ଼ନ୍ତୁ',rp:'ରେଜିଷ୍ଟର ପୃଷ୍ଠା',sc:'{n}/{N} ସ୍କାନ୍ ହୋଇଛି',pg:'ପୃଷ୍ଠା',ex:'⬇ ZIP ଏକ୍ସପୋର୍ଟ (ସେୟାର୍ / ସେଭ୍)',del:'ରେକର୍ଡ ଡିଲିଟ୍ କରନ୍ତୁ',cdel:'ଏହି ରେକର୍ଡ ଓ ଏହାର ସମସ୍ତ ଫଟୋ ଏହି ଫୋନ୍‌ରୁ ଡିଲିଟ୍ କରିବେ?',tap:'ପୂର୍ଣ୍ଣ ଆକାରରେ ଦେଖିବାକୁ ରେଫରେନ୍ସ ଚିତ୍ରକୁ ଟାପ୍ କରନ୍ତୁ।',info:'ℹ️ ସୂଚନାମୂଳକ ପୃଷ୍ଠା — ସ୍କାନ୍ ଆବଶ୍ୟକ ନାହିଁ।',you:'ଆପଣଙ୍କ ଫଟୋ',ret:'ପୁଣି ଫଟୋ ନିଅନ୍ତୁ (ପୁରୁଣାକୁ ବଦଳାଏ)',scp:'ପୃଷ୍ଠା ସ୍କାନ୍ କରନ୍ତୁ',gal:'ଗ୍ୟାଲେରୀ',offl:'⬇',prv:'‹ ପୂର୍ବ',nxt:'ପରବର୍ତ୍ତୀ ›',cov:'କଭର ପୃଷ୍ଠା',hom:'ମୂଳ ପୃଷ୍ଠା',off:'ଅଫଲାଇନ୍ ପାଇଁ ଡାଉନଲୋଡ୍',ins:'ଆପ୍ ଇନଷ୍ଟଲ୍ କରନ୍ତୁ',rdy:'ଅଫଲାଇନ୍ ବ୍ୟବହାର ପାଇଁ ପ୍ରସ୍ତୁତ ✓',fail:'ଡାଉନଲୋଡ୍ ହେଲା ନାହିଁ। ଇଣ୍ଟରନେଟ୍ ଦେଖି ପୁଣି ଚେଷ୍ଟା କରନ୍ତୁ।',ios:'ସେୟାର୍ ଟାପ୍ କରି “Add to Home Screen” ବାଛନ୍ତୁ।'}};
 D.en.onl='Online';D.en.ofl='Offline';D.or.onl='ଅନଲାଇନ୍';D.or.ofl='ଅଫଲାଇନ୍';
 function netUpd(){const on=navigator.onLine,n=$('#net');n.classList.toggle('off',!on);n.lastElementChild.textContent=tr(on?'onl':'ofl')}
 addEventListener('online',netUpd);addEventListener('offline',netUpd);
@@ -127,7 +128,7 @@ function applyT(){document.documentElement.lang=L;
 function toast(m){let e=$('#ts');if(!e){e=document.createElement('div');e.id='ts';document.body.append(e)}e.textContent=m;e.hidden=false;clearTimeout(e._t);e._t=setTimeout(()=>e.hidden=true,3000)}
 $('#hl').onclick=$('#cl').onclick=()=>{L=L=='en'?'or':'en';try{localStorage.lang=L}catch(e){}applyT();route()};
 $('#hc').onclick=()=>$('#cv').hidden=false;
-$('#hh').onclick=()=>{$('#cv').hidden=true;location.hash.length>2?location.hash='#/':route()};
+$('#hh').onclick=$('#hr').onclick=()=>{$('#cv').hidden=true;location.hash.length>2?location.hash='#/':route()};
 $('#go').onclick=()=>{try{sessionStorage.cv=1}catch(e){}$('#hh').click()};
 try{if(sessionStorage.cv||location.hash)$('#cv').hidden=true}catch(e){}
 // offline download: caches all 53 reference images
