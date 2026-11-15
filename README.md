@@ -1,4 +1,4 @@
-# MCP Card Scanner (PWA)
+# MCP Card — Photo Kit (PWA)
 
 1. Create a **public** GitHub repo and upload every file in this folder to its root.
 2. Repo **Settings > Pages > Build and deployment**: Source = *Deploy from a branch*, Branch = `main` / `(root)`, Save.

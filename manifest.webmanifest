@@ -1,6 +1,6 @@
 {
- "name": "MCP Card Scanner",
- "short_name": "MCP Scanner",
+ "name": "MCP Card — Photo Kit",
+ "short_name": "MCP Photo Kit",
  "start_url": "./",
  "scope": "./",
  "display": "standalone",
