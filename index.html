@@ -47,6 +47,7 @@ header{padding:10px 12px}
 #ho{width:auto;padding:0 10px}#ho b{font-size:13px;white-space:nowrap}
 #ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;max-width:90%;padding:10px 16px;border-radius:20px;background:#111;color:#fff;font-size:14px;text-align:center}#ts[hidden]{display:none}
 #ub{position:fixed;left:12px;right:12px;top:calc(12px + env(safe-area-inset-top));z-index:50;max-width:616px;margin:auto;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:#111;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.4)}#ub[hidden]{display:none}
+#cx #ub{position:relative;inset:auto;margin:0 0 16px;max-width:none;text-shadow:none;background:rgba(0,0,0,.65);backdrop-filter:blur(6px)}
 #ub span{flex:1;font-size:14px}#ub button{border:0;border-radius:10px;min-height:36px;padding:0 12px;font:600 14px system-ui;cursor:pointer}#ubr{background:#2dd4bf;color:#063}#ubx{background:transparent;color:#fff;font-size:18px!important}
 </style></head>
 <body><div id=cv><img src=cover.jpg alt=""><button id=cl class=hb></button><div id=cx><h1 data-t=app></h1><p data-t=sub></p><button class=b id=go data-t=go></button></div></div>
@@ -147,6 +148,9 @@ $('#hi').onclick=async()=>{if(dip){dip.prompt();await dip.userChoice;dip=null;sh
 const hadSW=!!navigator.serviceWorker?.controller;
 function updNote(){const n=$('#ub');if(!n.hidden)return;$('#ubt').textContent=tr('unw');$('#ubr').textContent=tr('urf');n.hidden=false;
  try{if('Notification'in window&&Notification.permission=='granted'&&document.hidden)navigator.serviceWorker.getRegistration().then(r=>r&&r.showNotification(tr('app'),{body:tr('unw'),icon:'icon-192.png',tag:'upd'}))}catch(e){}}
+// on the cover page the notice sits inside the cover, above the Get started button
+const ubPlace=()=>{const u=$('#ub');$('#cv').hidden?document.body.insertBefore(u,$('main')):$('#cx').insertBefore(u,$('#go'))};
+new MutationObserver(ubPlace).observe($('#cv'),{attributes:true,attributeFilter:['hidden']});ubPlace();
 $('#ubr').onclick=()=>location.reload();$('#ubx').onclick=()=>$('#ub').hidden=true;
 if('serviceWorker'in navigator){
  if(hadSW)navigator.serviceWorker.addEventListener('controllerchange',updNote);
