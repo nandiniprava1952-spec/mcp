@@ -143,10 +143,15 @@ async function dl(){const b=$('#ho'),p=$('#hp');if(b.dataset.busy)return;b.datas
 $('#ho').onclick=dl;
 caches.open(CN).then(async c=>{let n=0;for(const u of URLS)if(await c.match(u,{ignoreVary:true}))n++;if(n==URLS.length)$('#ho').classList.add('done')});
 // install icon: hidden once installed / running standalone
-let dip;const inst=()=>navigator.standalone||matchMedia('(display-mode: standalone)').matches;
+let dip;const IK='mcp-installed';
+const gI=()=>{try{return localStorage.getItem(IK)==='1'}catch(e){return false}},sI=v=>{try{v?localStorage.setItem(IK,'1'):localStorage.removeItem(IK)}catch(e){}};
+const inst=()=>{const r=navigator.standalone||matchMedia('(display-mode: standalone)').matches;if(r)sI(1);return r||gI()};
 const showI=()=>{$('#hi').hidden=inst()||!(dip||/iphone|ipad|ipod/i.test(navigator.userAgent));$('#ci').hidden=inst()};
-addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;showI()});
-addEventListener('appinstalled',()=>{dip=null;$('#hi').hidden=true;$('#ci').hidden=true});
+// browser offers install only when NOT installed -> clear stale flag (e.g. after uninstall)
+addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;sI(0);showI()});
+addEventListener('appinstalled',()=>{dip=null;sI(1);$('#hi').hidden=true;$('#ci').hidden=true});
+if(navigator.getInstalledRelatedApps)navigator.getInstalledRelatedApps().then(a=>{if(a&&a.length){sI(1);showI()}}).catch(()=>{});
+showI();
 $('#hi').onclick=$('#ci').onclick=async()=>{if(dip){dip.prompt();await dip.userChoice;dip=null;showI()}else toast(tr(/iphone|ipad|ipod/i.test(navigator.userAgent)?'ios':'ins2'))};
 showI();applyT();
 
