@@ -1,4 +1,4 @@
-const V='mcp-v9',R='mcp-ref',A=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable-512.png','cover.jpg'];
+const V='mcp-v10',R='mcp-ref',A=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','icon-maskable-512.png','cover.jpg'];
 // install: save each app file and tell the page the progress (drives the update circle/line)
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(V);
  for(let n=0;n<A.length;){const r=await fetch(A[n],{cache:'reload'});if(!r.ok)throw 0;await c.put(A[n],r);n++;
