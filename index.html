@@ -32,13 +32,13 @@ input:not([type=file]){display:block;width:100%;font:inherit;padding:12px;margin
 progress{width:100%;accent-color:var(--ac)}h2{font-size:16px;margin:24px 0 8px}
 .note{padding:12px;border-radius:10px;background:var(--card);border:1px solid var(--br)}
 #cv{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:flex-end;padding:24px 24px calc(32px + env(safe-area-inset-bottom));color:#fff;background:linear-gradient(#4a4a38,#1b241f)}
-#cv[hidden]{display:none}
+#cv[hidden]{display:none!important}
 #cv>img{position:absolute;top:0;left:0;width:100%;height:min(70vh,150vw);object-fit:cover;object-position:88% 0;-webkit-mask-image:linear-gradient(#000 85%,transparent);mask-image:linear-gradient(#000 85%,transparent)}
 #cx .g{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.4)}
 #cx{position:relative;text-shadow:0 1px 6px rgba(0,0,0,.6)}#cx h1{font-size:28px;margin:0 0 6px}#cx p{margin:0 0 16px;opacity:.95}
 header{padding:10px 12px}
 .hb{flex:none;position:relative;width:36px;height:36px;display:grid;place-items:center;border:0;border-radius:10px;background:rgba(255,255,255,.16);color:#fff;font:700 13px system-ui;padding:0;text-decoration:none;cursor:pointer}
-.hb[hidden]{display:none}.hb img{width:30px;height:30px;border-radius:7px}
+.hb[hidden]{display:none!important}.hb img{width:30px;height:30px;border-radius:7px}
 .hb svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #hl,#cl{width:auto;min-width:36px;padding:0 8px}#hbk{font-size:26px;padding-bottom:3px}
 #hl,#hr{position:fixed;right:12px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:6;width:auto;height:40px;padding:0 16px;border-radius:20px;background:var(--ac);box-shadow:0 2px 10px rgba(0,0,0,.35);font-size:14px}
@@ -47,8 +47,8 @@ header{padding:10px 12px}
 #hp{position:absolute;right:-3px;bottom:-3px;min-width:16px;padding:0 4px;border-radius:8px;background:#fff;color:#0f766e;font-size:10px;line-height:16px}#hp:empty{display:none}
 .done b{color:#86efac}
 #hi{font-size:18px;line-height:1}#ho{width:auto;padding:0 10px}#ho b{font-size:18px;line-height:1;white-space:nowrap}
-#ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;max-width:90%;padding:10px 16px;border-radius:20px;background:#111;color:#fff;font-size:14px;text-align:center}#ts[hidden]{display:none}
-.net{display:inline-flex;align-items:center;gap:6px;flex:none;white-space:nowrap;font:700 11px/1 system-ui,sans-serif;padding:6px 9px;border-radius:99px;background:rgba(0,0,0,.28);color:#fff}.net i{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.35);transition:background .25s,box-shadow .25s}.net.off i{background:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,.35)}#cv .net{position:absolute;top:calc(10px + env(safe-area-inset-top));right:12px;z-index:3;background:rgba(8,29,51,.65)}.net.off{color:#facc15}</style></head>
+#ts{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:30;max-width:90%;padding:10px 16px;border-radius:20px;background:#111;color:#fff;font-size:14px;text-align:center}#ts[hidden]{display:none!important}
+.net{display:inline-flex;align-items:center;gap:6px;flex:none;white-space:nowrap;font:700 11px/1 system-ui,sans-serif;padding:6px 9px;border-radius:99px;background:rgba(0,0,0,.28);color:#fff}.net i{width:9px;height:9px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.35);transition:background .25s,box-shadow .25s}.net.off i{background:#facc15;box-shadow:0 0 0 3px rgba(250,204,21,.35)}#cv .net{position:absolute;top:calc(10px + env(safe-area-inset-top));right:12px;z-index:3;background:rgba(8,29,51,.65)}.net.off{color:#facc15}[hidden]{display:none!important}</style></head>
 <body><div id=cv><img src=cover.jpg alt=""><span class="net" role=status aria-live=polite><i></i><b></b></span><button id=cl class=hb></button><div id=cx><h1 data-t=app></h1><p data-t=sub></p><button class=b id=go data-t=go></button><button class="b g" id=ci data-t=ins></button></div></div>
 <header><button id=hc class=hb><img src=icon-192.png alt=""></button><a id=hbk class=hb hidden>‹</a><h1 id=ht></h1><span id=net class=net role=status aria-live=polite><i></i><b></b></span><button id=hi class=hb hidden>📲</button><button id=hh class=hb><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg></button><button id=ho class=hb aria-label="Download for offline use" title="Download for offline use"><b data-t=offl></b><span id=hp></span></button></header><button id=hl class=hb></button><button id=hr class=hb data-t=recs hidden></button>
 <main></main>
@@ -145,7 +145,7 @@ caches.open(CN).then(async c=>{let n=0;for(const u of URLS)if(await c.match(u,{i
 // install icon: hidden once installed / running standalone
 let dip;const IK='mcp-installed';
 const gI=()=>{try{return localStorage.getItem(IK)==='1'}catch(e){return false}},sI=v=>{try{v?localStorage.setItem(IK,'1'):localStorage.removeItem(IK)}catch(e){}};
-const inst=()=>{const r=navigator.standalone||matchMedia('(display-mode: standalone)').matches;if(r)sI(1);return r||gI()};
+const inst=()=>{const r=navigator.standalone||matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: minimal-ui)').matches;if(r)sI(1);return r||gI()};
 const showI=()=>{$('#hi').hidden=inst()||!(dip||/iphone|ipad|ipod/i.test(navigator.userAgent));$('#ci').hidden=inst()};
 // browser offers install only when NOT installed -> clear stale flag (e.g. after uninstall)
 addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;sI(0);showI()});
