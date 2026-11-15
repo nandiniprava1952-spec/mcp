@@ -7,4 +7,14 @@
 
 Reference images load from `raw.githubusercontent.com/nandiniprava1952-spec/mcp/main/` (that repo must stay public). They are cached after first view, so open each page once while online to use them offline.
 
-When you change any file, bump `V` in `sw.js` (e.g. `mcp-v2`) so phones pick up the update.
+## How updates reach users
+The app checks for a new version when it opens, when the user comes back to it, and every 30 minutes
+(logic in `update-kit.js`, which is the same file in all three apps).
+
+1. **Update found** - a card appears at the top with a progress ring and percentage, "Downloading update…".
+2. **Update ready** - at 100% it becomes "Update available" with **Update** and **Later**. *Later* hides the card until the next check.
+3. **Installing** - *Update* shows a spinning ring, "Installing update…", then the app restarts on its own.
+4. **After the restart** - "✔ Updated to the latest version".
+
+**To release an update:** change your files, then bump the version name at the top of `sw.js` (`V`, e.g. `mcp-v17`).
+That is the only thing phones look at. `update-kit.js` must stay listed in the file list at the top of `sw.js`.
